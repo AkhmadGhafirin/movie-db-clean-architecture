@@ -18,8 +18,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_KEY", "\"e105d87b5d854ead89b9624b5bbfd099\"")
-        buildConfigField("String", "BASE_URL", "\"https://api.rawg.io/api/\"")
+        buildConfigField("String", "ACCESS_TOKEN", "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5YTdlZWU5ODMyMzY2NDdmZmY1ODdlNGFiYjFlMjliZCIsInN1YiI6IjU5ODliMWJjOTI1MTQxMzI5ZTAwZWVjMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.e-mvvfdGXXwmba4fd2eZ6AFiPLAgVVD0CSMWc-tDZCs\"")
+        buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
     }
 
     buildTypes {
