@@ -1,5 +1,6 @@
 package com.cascer.movieappcleanarchitecture.di
 
+import com.cascer.movieappcleanarchitecture.BuildConfig
 import com.cascer.movieappcleanarchitecture.data.remote.network.ApiService
 import com.google.gson.GsonBuilder
 import dagger.Module

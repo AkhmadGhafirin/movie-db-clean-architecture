@@ -4,18 +4,19 @@ import android.content.Context
 import android.graphics.Color
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.cascer.movieappcleanarchitecture.utils.Constant.IMAGE_W500_URL
 import java.util.Random
 
 object ImageUtils {
     fun ImageView.load(context: Context, url: String) {
         Glide.with(context)
-            .load(url.trim())
+            .load(IMAGE_W500_URL + url.trim())
             .into(this)
     }
 
     fun ImageView.loadCircle(context: Context, url: String) {
         Glide.with(context)
-            .load(url.trim())
+            .load(IMAGE_W500_URL + url.trim())
             .circleCrop()
             .into(this)
     }

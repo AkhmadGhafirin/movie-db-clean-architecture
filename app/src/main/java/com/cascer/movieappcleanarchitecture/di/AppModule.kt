@@ -1,4 +1,18 @@
 package com.cascer.movieappcleanarchitecture.di
 
-object AppModule {
+import com.cascer.movieappcleanarchitecture.domain.usecase.MovieUseCase
+import com.cascer.movieappcleanarchitecture.domain.usecase.MovieUseCaseImpl
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class AppModule {
+
+    @Binds
+    @Singleton
+    abstract fun provideGameUseCase(movieUseCase: MovieUseCaseImpl): MovieUseCase
 }
