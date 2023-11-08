@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val movieUseCase: MovieUseCase
+    movieUseCase: MovieUseCase
 ) : ViewModel() {
     val nowPlayingMovies =
         movieUseCase.getListNowPlayingMovie().cachedIn(viewModelScope).asLiveData()
@@ -20,4 +20,6 @@ class MovieViewModel @Inject constructor(
         movieUseCase.getListTopRatedMovie().cachedIn(viewModelScope).asLiveData()
     val upcomingMovies =
         movieUseCase.getListUpcomingMovie().cachedIn(viewModelScope).asLiveData()
+    val favoriteMovies =
+        movieUseCase.getListFavoriteMovie().asLiveData()
 }

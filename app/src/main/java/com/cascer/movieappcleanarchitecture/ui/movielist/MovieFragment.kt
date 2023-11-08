@@ -1,5 +1,6 @@
 package com.cascer.movieappcleanarchitecture.ui.movielist
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cascer.movieappcleanarchitecture.databinding.FragmentMovieBinding
+import com.cascer.movieappcleanarchitecture.domain.model.Movie
+import com.cascer.movieappcleanarchitecture.ui.LoadingStateAdapter
+import com.cascer.movieappcleanarchitecture.ui.moviedetail.MovieDetailActivity
 import com.cascer.movieappcleanarchitecture.utils.Constant.FAVORITE
 import com.cascer.movieappcleanarchitecture.utils.Constant.NOW_PLAYING
 import com.cascer.movieappcleanarchitecture.utils.Constant.POPULAR
@@ -20,7 +24,7 @@ class MovieFragment(private val type: Int) : Fragment() {
 
     private lateinit var binding: FragmentMovieBinding
     private val viewModel: MovieViewModel by viewModels()
-    private val movieAdapter by lazy { MovieAdapter { } }
+    private val movieAdapter by lazy { MovieAdapter { toDetail(it) } }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +39,12 @@ class MovieFragment(private val type: Int) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         setupViewModel()
+    }
+
+    private fun toDetail(movie: Movie) {
+        startActivity(Intent(requireContext(), MovieDetailActivity::class.java).apply {
+            putExtra(MovieDetailActivity.EXTRA_ID, movie.id)
+        })
     }
 
     private fun setupViews() {

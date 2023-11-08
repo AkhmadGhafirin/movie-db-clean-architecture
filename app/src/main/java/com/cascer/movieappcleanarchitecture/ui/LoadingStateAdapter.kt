@@ -1,4 +1,4 @@
-package com.cascer.movieappcleanarchitecture.ui.movielist
+package com.cascer.movieappcleanarchitecture.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

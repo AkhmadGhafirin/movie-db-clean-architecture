@@ -6,4 +6,12 @@
     <string name="top_rated">Top Rated</string>
     <string name="upcoming">Upcoming</string>
     <string name="favorite">Favorite</string>
+    <string name="title_label">Title</string>
+    <string name="genres_label">Genre</string>
+    <string name="release_label">Release</string>
+    <string name="rating_label">Rating</string>
+    <string name="duration_label">Duration</string>
+    <string name="overview_label">Overview</string>
+    <string name="reviews">Reviews</string>
+    <string name="trailers">Trailers</string>
 </resources>

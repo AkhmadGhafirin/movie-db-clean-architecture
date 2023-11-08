@@ -1,0 +1,21 @@
+package com.cascer.movieappcleanarchitecture.data.remote.response
+
+
+import com.google.gson.annotations.SerializedName
+
+data class MovieReviewResponse(
+    @SerializedName("author")
+    val author: String?,
+    @SerializedName("author_details")
+    val authorDetails: AuthorDetailResponse?,
+    @SerializedName("content")
+    val content: String?,
+    @SerializedName("created_at")
+    val createdAt: String?,
+    @SerializedName("id")
+    val id: String?,
+    @SerializedName("updated_at")
+    val updatedAt: String?,
+    @SerializedName("url")
+    val url: String?
+)
