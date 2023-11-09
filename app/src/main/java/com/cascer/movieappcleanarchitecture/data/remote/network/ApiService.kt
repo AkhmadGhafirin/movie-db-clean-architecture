@@ -46,8 +46,7 @@ interface ApiService {
     @GET("movie/{id}/videos")
     suspend fun getListVideoMovie(
         @Path("id") movieId: Int,
-        @Query("language") language: String,
-        @Query("page") page: Int,
+        @Query("language") language: String
     ): ListMovieVideoResponse
 
     @GET("movie/{id}/reviews")

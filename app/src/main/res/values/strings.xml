@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieAppCleanArchitecture</string>
+    <string name="app_name">TMDB</string>
     <string name="retry">Retry</string>
     <string name="now_playing">Now Playing</string>
     <string name="popular">Popular</string>
@@ -14,4 +14,8 @@
     <string name="overview_label">Overview</string>
     <string name="reviews">Reviews</string>
     <string name="trailers">Trailers</string>
+    <string name="trailer_label">Trailer</string>
+    <string name="add_favorite">Added to Favorite</string>
+    <string name="remove_favorite">Remove from Favorite</string>
+    <string name="no_data">Empty data</string>
 </resources>

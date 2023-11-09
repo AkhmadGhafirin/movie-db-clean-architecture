@@ -13,8 +13,7 @@ class MovieUseCaseImpl @Inject constructor(
     private val movieRepository: MovieRepository
 ) : MovieUseCase {
     override fun getDetailMovie(id: Int): Flow<Resource<Movie>> = movieRepository.getDetailMovie(id)
-
-    override fun getListVideoMovie(id: Int): Flow<PagingData<MovieVideo>> =
+    override fun getListVideoMovie(id: Int): Flow<Resource<List<MovieVideo>>> =
         movieRepository.getListVideoMovie(id)
 
     override fun getListReviewMovie(id: Int): Flow<PagingData<MovieReview>> =
@@ -33,8 +32,8 @@ class MovieUseCaseImpl @Inject constructor(
         movieRepository.getListUpcomingMovie()
 
     override fun getListFavoriteMovie(): Flow<List<Movie>> = movieRepository.getListFavoriteMovie()
+    override fun getStatusFavoriteMovie(id: Int): Flow<Movie> =
+        movieRepository.getStatusFavoriteMovie(id)
 
-    override fun addFavoriteMovie(movie: Movie) = movieRepository.addFavoriteMovie(movie)
-
-    override fun deleteFavoriteMovie(id: Int) = movieRepository.deleteFavoriteMovie(id)
+    override fun addFavoriteMovie(movie: Movie, newState: Boolean) = movieRepository.addFavoriteMovie(movie, newState)
 }

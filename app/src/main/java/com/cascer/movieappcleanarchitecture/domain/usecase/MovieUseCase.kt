@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieUseCase {
     fun getDetailMovie(id: Int): Flow<Resource<Movie>>
-    fun getListVideoMovie(id: Int): Flow<PagingData<MovieVideo>>
+    fun getListVideoMovie(id: Int): Flow<Resource<List<MovieVideo>>>
     fun getListReviewMovie(id: Int): Flow<PagingData<MovieReview>>
     fun getListNowPlayingMovie(): Flow<PagingData<Movie>>
     fun getListPopularMovie(): Flow<PagingData<Movie>>
     fun getListTopRatedMovie(): Flow<PagingData<Movie>>
     fun getListUpcomingMovie(): Flow<PagingData<Movie>>
     fun getListFavoriteMovie(): Flow<List<Movie>>
-    fun addFavoriteMovie(movie: Movie)
-    fun deleteFavoriteMovie(id: Int)
+    fun getStatusFavoriteMovie(id: Int): Flow<Movie>
+    fun addFavoriteMovie(movie: Movie, newState: Boolean)
 }

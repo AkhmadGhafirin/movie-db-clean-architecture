@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.cascer.movieappcleanarchitecture.data.remote.network.ApiResponse
 import com.cascer.movieappcleanarchitecture.data.remote.network.ApiService
 import com.cascer.movieappcleanarchitecture.data.remote.response.MovieResponse
+import com.cascer.movieappcleanarchitecture.data.remote.response.MovieVideoResponse
 import com.cascer.movieappcleanarchitecture.domain.model.Movie
 import com.cascer.movieappcleanarchitecture.domain.model.MovieReview
 import com.cascer.movieappcleanarchitecture.domain.model.MovieVideo
@@ -30,30 +31,20 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getListVideoMovie(id: Int): PagingSource<Int, MovieVideo> {
-        return object : PagingSource<Int, MovieVideo>() {
-            override fun getRefreshKey(state: PagingState<Int, MovieVideo>): Int? {
-                return state.anchorPosition?.let { anchorPosition ->
-                    val anchorPage = state.closestPageToPosition(anchorPosition)
-                    anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+    suspend fun getListVideoMovie(id: Int): Flow<ApiResponse<List<MovieVideoResponse>>> {
+        return flow {
+            try {
+                val response = apiService.getListVideoMovie(id, language = LANGUAGE)
+                val dataArray = response.results
+                if (dataArray?.isNotEmpty() == true) {
+                    emit(ApiResponse.Success(dataArray))
+                } else {
+                    emit(ApiResponse.Empty)
                 }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
             }
-
-            override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieVideo> {
-                return try {
-                    val position = params.key ?: INITIAL_PAGE_INDEX
-                    val responseData = apiService.getListVideoMovie(
-                        movieId = id, language = LANGUAGE, page = position
-                    )
-
-                    LoadResult.Page(data = responseData.results?.map { it.toDomain() } ?: listOf(),
-                        prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
-                        nextKey = if (responseData.results.isNullOrEmpty()) null else position + 1)
-                } catch (e: Exception) {
-                    LoadResult.Error(e)
-                }
-            }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     fun getListReviewMovie(id: Int): PagingSource<Int, MovieReview> {

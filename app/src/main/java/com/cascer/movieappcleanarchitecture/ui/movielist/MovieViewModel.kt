@@ -20,6 +20,4 @@ class MovieViewModel @Inject constructor(
         movieUseCase.getListTopRatedMovie().cachedIn(viewModelScope).asLiveData()
     val upcomingMovies =
         movieUseCase.getListUpcomingMovie().cachedIn(viewModelScope).asLiveData()
-    val favoriteMovies =
-        movieUseCase.getListFavoriteMovie().asLiveData()
 }

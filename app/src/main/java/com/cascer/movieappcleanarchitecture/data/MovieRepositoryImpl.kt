@@ -43,11 +43,21 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getListVideoMovie(id: Int): Flow<PagingData<MovieVideo>> {
-        return Pager(
-            config = PagingConfig(pageSize = PAGE_SIZE),
-            pagingSourceFactory = { remoteDataSource.getListVideoMovie(id) }
-        ).flow
+    override fun getListVideoMovie(id: Int): Flow<Resource<List<MovieVideo>>> = flow {
+        emit(Resource.Loading())
+        when (val apiResponse = remoteDataSource.getListVideoMovie(id).first()) {
+            is ApiResponse.Success -> {
+                emit(Resource.Success(apiResponse.data.map { it.toDomain() }))
+            }
+
+            is ApiResponse.Empty -> {
+                emit(Resource.Success(listOf()))
+            }
+
+            is ApiResponse.Error -> {
+                emit(Resource.Error(apiResponse.errorMessage))
+            }
+        }
     }
 
     override fun getListReviewMovie(id: Int): Flow<PagingData<MovieReview>> {
@@ -89,12 +99,18 @@ class MovieRepositoryImpl @Inject constructor(
         return localDataSource.getAllFavorite().map { it.map { movie -> movie.toDomain() } }
     }
 
-    override fun addFavoriteMovie(movie: Movie) {
-        appExecutors.diskIO().execute { localDataSource.insertFavorite(movie.toEntity()) }
+    override fun getStatusFavoriteMovie(id: Int): Flow<Movie> {
+        return localDataSource.getStatusFavorite(id).map { it?.toDomain() ?: emptyMovie() }
     }
 
-    override fun deleteFavoriteMovie(id: Int) {
-        localDataSource.deleteFavorite(id)
+    override fun addFavoriteMovie(movie: Movie, newState: Boolean) {
+        appExecutors.diskIO().execute {
+            if (newState) {
+                localDataSource.insertFavorite(movie.toEntity())
+            } else {
+                localDataSource.deleteFavorite(movie.id)
+            }
+        }
     }
 
     private companion object {

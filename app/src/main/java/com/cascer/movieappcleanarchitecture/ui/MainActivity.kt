@@ -1,12 +1,13 @@
 package com.cascer.movieappcleanarchitecture.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.cascer.movieappcleanarchitecture.R
 import com.cascer.movieappcleanarchitecture.databinding.ActivityMainBinding
+import com.cascer.movieappcleanarchitecture.ui.moviefavorite.MovieFavoriteActivity
 import com.cascer.movieappcleanarchitecture.ui.movielist.MovieFragment
-import com.cascer.movieappcleanarchitecture.utils.Constant.FAVORITE
 import com.cascer.movieappcleanarchitecture.utils.Constant.NOW_PLAYING
 import com.cascer.movieappcleanarchitecture.utils.Constant.POPULAR
 import com.cascer.movieappcleanarchitecture.utils.Constant.TOP_RATED
@@ -28,6 +29,17 @@ class MainActivity : AppCompatActivity() {
     private fun setupViews() {
         replaceFragment(MovieFragment(NOW_PLAYING))
         with(binding) {
+            toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.favorites -> {
+                        startActivity(Intent(this@MainActivity, MovieFavoriteActivity::class.java))
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+
             bottomNavigationView.setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.now_playing -> {
@@ -47,11 +59,6 @@ class MainActivity : AppCompatActivity() {
 
                     R.id.upcoming -> {
                         replaceFragment(MovieFragment(UPCOMING))
-                        true
-                    }
-
-                    R.id.favorite -> {
-                        replaceFragment(MovieFragment(FAVORITE))
                         true
                     }
 

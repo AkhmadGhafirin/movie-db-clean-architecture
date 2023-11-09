@@ -12,11 +12,12 @@ import com.cascer.movieappcleanarchitecture.databinding.FragmentMovieBinding
 import com.cascer.movieappcleanarchitecture.domain.model.Movie
 import com.cascer.movieappcleanarchitecture.ui.LoadingStateAdapter
 import com.cascer.movieappcleanarchitecture.ui.moviedetail.MovieDetailActivity
-import com.cascer.movieappcleanarchitecture.utils.Constant.FAVORITE
 import com.cascer.movieappcleanarchitecture.utils.Constant.NOW_PLAYING
 import com.cascer.movieappcleanarchitecture.utils.Constant.POPULAR
 import com.cascer.movieappcleanarchitecture.utils.Constant.TOP_RATED
 import com.cascer.movieappcleanarchitecture.utils.Constant.UPCOMING
+import com.cascer.movieappcleanarchitecture.utils.gone
+import com.cascer.movieappcleanarchitecture.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -66,30 +67,56 @@ class MovieFragment(private val type: Int) : Fragment() {
             when (type) {
                 NOW_PLAYING -> {
                     nowPlayingMovies.observe(requireActivity()) {
+                        binding.progressBar.gone()
+                        if (movieAdapter.itemCount < 0) {
+                            binding.containerEmpty.viewEmpty.visible()
+                            binding.rvList.gone()
+                        } else {
+                            binding.containerEmpty.viewEmpty.gone()
+                            binding.rvList.visible()
+                        }
                         movieAdapter.submitData(lifecycle, it)
                     }
                 }
 
                 POPULAR -> {
                     popularMovies.observe(requireActivity()) {
+                        binding.progressBar.gone()
+                        if (movieAdapter.itemCount < 0) {
+                            binding.containerEmpty.viewEmpty.visible()
+                            binding.rvList.gone()
+                        } else {
+                            binding.containerEmpty.viewEmpty.gone()
+                            binding.rvList.visible()
+                        }
                         movieAdapter.submitData(lifecycle, it)
                     }
                 }
 
                 TOP_RATED -> {
                     topRatedMovies.observe(requireActivity()) {
+                        binding.progressBar.gone()
+                        if (movieAdapter.itemCount < 0) {
+                            binding.containerEmpty.viewEmpty.visible()
+                            binding.rvList.gone()
+                        } else {
+                            binding.containerEmpty.viewEmpty.gone()
+                            binding.rvList.visible()
+                        }
                         movieAdapter.submitData(lifecycle, it)
                     }
                 }
 
                 UPCOMING -> {
                     upcomingMovies.observe(requireActivity()) {
-                        movieAdapter.submitData(lifecycle, it)
-                    }
-                }
-
-                FAVORITE -> {
-                    upcomingMovies.observe(requireActivity()) {
+                        binding.progressBar.gone()
+                        if (movieAdapter.itemCount < 0) {
+                            binding.containerEmpty.viewEmpty.visible()
+                            binding.rvList.gone()
+                        } else {
+                            binding.containerEmpty.viewEmpty.gone()
+                            binding.rvList.visible()
+                        }
                         movieAdapter.submitData(lifecycle, it)
                     }
                 }

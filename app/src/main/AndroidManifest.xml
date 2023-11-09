@@ -16,7 +16,7 @@
         android:theme="@style/Theme.MovieAppCleanArchitecture"
         tools:targetApi="31">
         <activity
-            android:name=".ui.movievideo.MovieVideoActivity"
+            android:name=".ui.moviefavorite.MovieFavoriteActivity"
             android:exported="false" />
         <activity
             android:name=".ui.moviereview.MovieReviewActivity"

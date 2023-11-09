@@ -9,9 +9,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
-
     @Query("SELECT * FROM movie")
     fun getAllFavorite(): Flow<List<MovieEntity>>
+
+    @Query("SELECT * FROM movie WHERE id = :id")
+    fun getStatusFavorite(id: Int): Flow<MovieEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavorite(movie: MovieEntity)
