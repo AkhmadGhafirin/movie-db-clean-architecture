@@ -16,13 +16,20 @@ fun View.invisible() {
     if (this.visibility == View.VISIBLE) this.visibility = View.INVISIBLE
 }
 
-fun String.toDisplayDate(): String {
+fun String.toDisplayDate(
+    apiFormat: String = "yyyy-MM-ddTHH:mm:ss:SSSZ",
+    displayFormat: String = "MM/dd/yyyy - HH:mm"
+): String {
     return try {
-        val apiFormat = SimpleDateFormat("yyyy-MM-ddTHH:mm:ss:SSSZ")
-        val displayFormat = SimpleDateFormat("MM/dd/yyyy - HH:mm")
+        val apiFormat = SimpleDateFormat(apiFormat)
+        val displayFormat = SimpleDateFormat(displayFormat)
         val parseDate = apiFormat.parse(this)
         displayFormat.format(parseDate)
     } catch (e: Exception) {
         this
     }
+}
+
+fun Int.toDisplayTime(): String {
+    return "${this / 60}h ${this % 60}m"
 }

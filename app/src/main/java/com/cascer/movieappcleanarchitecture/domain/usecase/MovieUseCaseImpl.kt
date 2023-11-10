@@ -3,6 +3,7 @@ package com.cascer.movieappcleanarchitecture.domain.usecase
 import androidx.paging.PagingData
 import com.cascer.movieappcleanarchitecture.data.Resource
 import com.cascer.movieappcleanarchitecture.domain.model.Movie
+import com.cascer.movieappcleanarchitecture.domain.model.MovieCast
 import com.cascer.movieappcleanarchitecture.domain.model.MovieReview
 import com.cascer.movieappcleanarchitecture.domain.model.MovieVideo
 import com.cascer.movieappcleanarchitecture.domain.repository.MovieRepository
@@ -13,6 +14,9 @@ class MovieUseCaseImpl @Inject constructor(
     private val movieRepository: MovieRepository
 ) : MovieUseCase {
     override fun getDetailMovie(id: Int): Flow<Resource<Movie>> = movieRepository.getDetailMovie(id)
+    override fun getListCastMovie(id: Int): Flow<Resource<List<MovieCast>>> =
+        movieRepository.getListCastMovie(id)
+
     override fun getListVideoMovie(id: Int): Flow<Resource<List<MovieVideo>>> =
         movieRepository.getListVideoMovie(id)
 
@@ -35,5 +39,6 @@ class MovieUseCaseImpl @Inject constructor(
     override fun getStatusFavoriteMovie(id: Int): Flow<Movie> =
         movieRepository.getStatusFavoriteMovie(id)
 
-    override fun addFavoriteMovie(movie: Movie, newState: Boolean) = movieRepository.addFavoriteMovie(movie, newState)
+    override fun addFavoriteMovie(movie: Movie, newState: Boolean) =
+        movieRepository.addFavoriteMovie(movie, newState)
 }

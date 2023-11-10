@@ -43,6 +43,8 @@
                 <include layout="@layout/view_movie_placeholder" />
 
                 <include layout="@layout/view_movie_placeholder" />
+
+                <include layout="@layout/view_movie_placeholder" />
             </LinearLayout>
         </ScrollView>
     </com.facebook.shimmer.ShimmerFrameLayout>

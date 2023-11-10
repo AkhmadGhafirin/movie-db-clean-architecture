@@ -25,4 +25,5 @@ data class Movie(
     val productionCompanies: List<ProductionCompany>,
     val productionCountries: List<ProductionCountry>,
     val spokenLanguages: List<SpokenLanguage>,
+    val casts: List<MovieCast> = emptyList(),
 )

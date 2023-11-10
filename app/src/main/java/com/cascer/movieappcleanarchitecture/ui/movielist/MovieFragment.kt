@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cascer.movieappcleanarchitecture.databinding.FragmentMovieBinding
 import com.cascer.movieappcleanarchitecture.domain.model.Movie
@@ -59,6 +60,30 @@ class MovieFragment(private val type: Int) : Fragment() {
                     footer = LoadingStateAdapter { movieAdapter.retry() }
                 )
             }
+
+            swipeRefresh.setOnRefreshListener {
+                rvList.gone()
+                movieAdapter.refresh()
+            }
+
+            movieAdapter.addLoadStateListener { loadState ->
+                if (loadState.source.refresh is LoadState.Loading) {
+                    if (!progressBar.isShimmerStarted) progressBar.startShimmer()
+                    progressBar.visible()
+                } else {
+                    progressBar.gone()
+                    if (movieAdapter.itemCount == 0) {
+                        swipeRefresh.gone()
+                        containerEmpty.viewEmpty.visible()
+                        rvList.gone()
+                    } else {
+                        swipeRefresh.isRefreshing = false
+                        swipeRefresh.visible()
+                        containerEmpty.viewEmpty.gone()
+                        rvList.visible()
+                    }
+                }
+            }
         }
     }
 
@@ -67,56 +92,24 @@ class MovieFragment(private val type: Int) : Fragment() {
             when (type) {
                 NOW_PLAYING -> {
                     nowPlayingMovies.observe(requireActivity()) {
-                        binding.progressBar.gone()
-                        if (movieAdapter.itemCount < 0) {
-                            binding.containerEmpty.viewEmpty.visible()
-                            binding.rvList.gone()
-                        } else {
-                            binding.containerEmpty.viewEmpty.gone()
-                            binding.rvList.visible()
-                        }
                         movieAdapter.submitData(lifecycle, it)
                     }
                 }
 
                 POPULAR -> {
                     popularMovies.observe(requireActivity()) {
-                        binding.progressBar.gone()
-                        if (movieAdapter.itemCount < 0) {
-                            binding.containerEmpty.viewEmpty.visible()
-                            binding.rvList.gone()
-                        } else {
-                            binding.containerEmpty.viewEmpty.gone()
-                            binding.rvList.visible()
-                        }
                         movieAdapter.submitData(lifecycle, it)
                     }
                 }
 
                 TOP_RATED -> {
                     topRatedMovies.observe(requireActivity()) {
-                        binding.progressBar.gone()
-                        if (movieAdapter.itemCount < 0) {
-                            binding.containerEmpty.viewEmpty.visible()
-                            binding.rvList.gone()
-                        } else {
-                            binding.containerEmpty.viewEmpty.gone()
-                            binding.rvList.visible()
-                        }
                         movieAdapter.submitData(lifecycle, it)
                     }
                 }
 
                 UPCOMING -> {
                     upcomingMovies.observe(requireActivity()) {
-                        binding.progressBar.gone()
-                        if (movieAdapter.itemCount < 0) {
-                            binding.containerEmpty.viewEmpty.visible()
-                            binding.rvList.gone()
-                        } else {
-                            binding.containerEmpty.viewEmpty.gone()
-                            binding.rvList.visible()
-                        }
                         movieAdapter.submitData(lifecycle, it)
                     }
                 }

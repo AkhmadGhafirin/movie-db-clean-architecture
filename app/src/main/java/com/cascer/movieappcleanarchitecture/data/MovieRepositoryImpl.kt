@@ -7,6 +7,7 @@ import com.cascer.movieappcleanarchitecture.data.local.LocalDataSource
 import com.cascer.movieappcleanarchitecture.data.remote.RemoteDataSource
 import com.cascer.movieappcleanarchitecture.data.remote.network.ApiResponse
 import com.cascer.movieappcleanarchitecture.domain.model.Movie
+import com.cascer.movieappcleanarchitecture.domain.model.MovieCast
 import com.cascer.movieappcleanarchitecture.domain.model.MovieReview
 import com.cascer.movieappcleanarchitecture.domain.model.MovieVideo
 import com.cascer.movieappcleanarchitecture.domain.repository.MovieRepository
@@ -35,6 +36,23 @@ class MovieRepositoryImpl @Inject constructor(
 
             is ApiResponse.Empty -> {
                 emit(Resource.Success(emptyMovie()))
+            }
+
+            is ApiResponse.Error -> {
+                emit(Resource.Error(apiResponse.errorMessage))
+            }
+        }
+    }
+
+    override fun getListCastMovie(id: Int): Flow<Resource<List<MovieCast>>> = flow {
+        emit(Resource.Loading())
+        when (val apiResponse = remoteDataSource.getListCastMovie(id).first()) {
+            is ApiResponse.Success -> {
+                emit(Resource.Success(apiResponse.data.map { it.toDomain() }))
+            }
+
+            is ApiResponse.Empty -> {
+                emit(Resource.Success(listOf()))
             }
 
             is ApiResponse.Error -> {

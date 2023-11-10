@@ -3,6 +3,7 @@ package com.cascer.movieappcleanarchitecture.ui.moviereview
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cascer.movieappcleanarchitecture.databinding.ActivityMovieReviewBinding
 import com.cascer.movieappcleanarchitecture.ui.LoadingStateAdapter
@@ -37,9 +38,32 @@ class MovieReviewActivity : AppCompatActivity() {
                 layoutManager = LinearLayoutManager(
                     this@MovieReviewActivity, LinearLayoutManager.VERTICAL, false
                 )
-                adapter = reviewAdapter.withLoadStateFooter(
-                    footer = LoadingStateAdapter { reviewAdapter.retry() }
-                )
+                adapter =
+                    reviewAdapter.withLoadStateFooter(footer = LoadingStateAdapter { reviewAdapter.retry() })
+            }
+
+            swipeRefresh.setOnRefreshListener {
+                rvList.gone()
+                reviewAdapter.refresh()
+            }
+
+            reviewAdapter.addLoadStateListener { loadState ->
+                if (loadState.source.refresh is LoadState.Loading) {
+                    if (!progressBar.isShimmerStarted) progressBar.startShimmer()
+                    progressBar.visible()
+                } else {
+                    progressBar.gone()
+                    if (reviewAdapter.itemCount == 0) {
+                        swipeRefresh.gone()
+                        containerEmpty.viewEmpty.visible()
+                        rvList.gone()
+                    } else {
+                        swipeRefresh.isRefreshing = false
+                        swipeRefresh.visible()
+                        containerEmpty.viewEmpty.gone()
+                        rvList.visible()
+                    }
+                }
             }
         }
     }
@@ -47,14 +71,6 @@ class MovieReviewActivity : AppCompatActivity() {
     private fun setupViewModel() {
         with(viewModel) {
             reviewMovie(id).observe(this@MovieReviewActivity) {
-                binding.progressBar.gone()
-                if (reviewAdapter.itemCount < 0) {
-                    binding.containerEmpty.viewEmpty.visible()
-                    binding.rvList.gone()
-                } else {
-                    binding.containerEmpty.viewEmpty.gone()
-                    binding.rvList.visible()
-                }
                 reviewAdapter.submitData(lifecycle, it)
             }
         }

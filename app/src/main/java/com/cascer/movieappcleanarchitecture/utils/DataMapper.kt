@@ -3,6 +3,7 @@ package com.cascer.movieappcleanarchitecture.utils
 import com.cascer.movieappcleanarchitecture.data.local.entity.MovieEntity
 import com.cascer.movieappcleanarchitecture.data.remote.response.AuthorDetailResponse
 import com.cascer.movieappcleanarchitecture.data.remote.response.GenreResponse
+import com.cascer.movieappcleanarchitecture.data.remote.response.MovieCastResponse
 import com.cascer.movieappcleanarchitecture.data.remote.response.MovieResponse
 import com.cascer.movieappcleanarchitecture.data.remote.response.MovieReviewResponse
 import com.cascer.movieappcleanarchitecture.data.remote.response.MovieVideoResponse
@@ -12,6 +13,7 @@ import com.cascer.movieappcleanarchitecture.data.remote.response.SpokenLanguageR
 import com.cascer.movieappcleanarchitecture.domain.model.AuthorDetail
 import com.cascer.movieappcleanarchitecture.domain.model.Genre
 import com.cascer.movieappcleanarchitecture.domain.model.Movie
+import com.cascer.movieappcleanarchitecture.domain.model.MovieCast
 import com.cascer.movieappcleanarchitecture.domain.model.MovieReview
 import com.cascer.movieappcleanarchitecture.domain.model.MovieVideo
 import com.cascer.movieappcleanarchitecture.domain.model.ProductionCompany
@@ -112,6 +114,14 @@ object DataMapper {
         official = official ?: false,
         publishedAt = publishedAt.orEmpty(),
         id = id.orEmpty()
+    )
+
+    fun MovieCastResponse.toDomain() = MovieCast(
+        name = name.orEmpty(),
+        profilePath = profilePath.orEmpty(),
+        originalName = originalName.orEmpty(),
+        character = character.orEmpty(),
+        id = id ?: 0
     )
 
     fun MovieReviewResponse.toDomain() = MovieReview(

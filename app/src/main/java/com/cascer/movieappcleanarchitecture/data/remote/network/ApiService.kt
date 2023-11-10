@@ -1,5 +1,6 @@
 package com.cascer.movieappcleanarchitecture.data.remote.network
 
+import com.cascer.movieappcleanarchitecture.data.remote.response.ListMovieCastResponse
 import com.cascer.movieappcleanarchitecture.data.remote.response.ListMovieResponse
 import com.cascer.movieappcleanarchitecture.data.remote.response.ListMovieReviewResponse
 import com.cascer.movieappcleanarchitecture.data.remote.response.ListMovieVideoResponse
@@ -55,4 +56,9 @@ interface ApiService {
         @Query("language") language: String,
         @Query("page") page: Int,
     ): ListMovieReviewResponse
+
+    @GET("movie/{id}/credits")
+    suspend fun getListCastMovie(
+        @Path("id") movieId: Int,
+    ): ListMovieCastResponse
 }

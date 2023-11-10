@@ -24,4 +24,7 @@
     <dimen name="dimen_75dp">75dp</dimen>
     <dimen name="dimen_300dp">300dp</dimen>
     <dimen name="dimen_200dp">200dp</dimen>
+    <dimen name="dimen_5dp">5dp</dimen>
+    <dimen name="dimen_220dp">220dp</dimen>
+    <dimen name="dimen_500dp">500dp</dimen>
 </resources>

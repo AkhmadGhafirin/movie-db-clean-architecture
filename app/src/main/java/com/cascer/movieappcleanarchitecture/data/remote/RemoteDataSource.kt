@@ -4,11 +4,11 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.cascer.movieappcleanarchitecture.data.remote.network.ApiResponse
 import com.cascer.movieappcleanarchitecture.data.remote.network.ApiService
+import com.cascer.movieappcleanarchitecture.data.remote.response.MovieCastResponse
 import com.cascer.movieappcleanarchitecture.data.remote.response.MovieResponse
 import com.cascer.movieappcleanarchitecture.data.remote.response.MovieVideoResponse
 import com.cascer.movieappcleanarchitecture.domain.model.Movie
 import com.cascer.movieappcleanarchitecture.domain.model.MovieReview
-import com.cascer.movieappcleanarchitecture.domain.model.MovieVideo
 import com.cascer.movieappcleanarchitecture.utils.DataMapper.toDomain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +25,22 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             try {
                 val response = apiService.getDetailMovie(id)
                 emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getListCastMovie(id: Int): Flow<ApiResponse<List<MovieCastResponse>>> {
+        return flow {
+            try {
+                val response = apiService.getListCastMovie(id)
+                val dataArray = response.cast
+                if (dataArray?.isNotEmpty() == true) {
+                    emit(ApiResponse.Success(dataArray))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
             }
