@@ -61,11 +61,6 @@ class MovieFragment(private val type: Int) : Fragment() {
                 )
             }
 
-            swipeRefresh.setOnRefreshListener {
-                rvList.gone()
-                movieAdapter.refresh()
-            }
-
             movieAdapter.addLoadStateListener { loadState ->
                 if (loadState.source.refresh is LoadState.Loading) {
                     if (!progressBar.isShimmerStarted) progressBar.startShimmer()
@@ -73,12 +68,9 @@ class MovieFragment(private val type: Int) : Fragment() {
                 } else {
                     progressBar.gone()
                     if (movieAdapter.itemCount == 0) {
-                        swipeRefresh.gone()
                         containerEmpty.viewEmpty.visible()
                         rvList.gone()
                     } else {
-                        swipeRefresh.isRefreshing = false
-                        swipeRefresh.visible()
                         containerEmpty.viewEmpty.gone()
                         rvList.visible()
                     }

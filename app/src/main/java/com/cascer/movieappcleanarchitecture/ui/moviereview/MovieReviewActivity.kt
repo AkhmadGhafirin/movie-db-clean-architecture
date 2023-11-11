@@ -42,11 +42,6 @@ class MovieReviewActivity : AppCompatActivity() {
                     reviewAdapter.withLoadStateFooter(footer = LoadingStateAdapter { reviewAdapter.retry() })
             }
 
-            swipeRefresh.setOnRefreshListener {
-                rvList.gone()
-                reviewAdapter.refresh()
-            }
-
             reviewAdapter.addLoadStateListener { loadState ->
                 if (loadState.source.refresh is LoadState.Loading) {
                     if (!progressBar.isShimmerStarted) progressBar.startShimmer()
@@ -54,12 +49,9 @@ class MovieReviewActivity : AppCompatActivity() {
                 } else {
                     progressBar.gone()
                     if (reviewAdapter.itemCount == 0) {
-                        swipeRefresh.gone()
                         containerEmpty.viewEmpty.visible()
                         rvList.gone()
                     } else {
-                        swipeRefresh.isRefreshing = false
-                        swipeRefresh.visible()
                         containerEmpty.viewEmpty.gone()
                         rvList.visible()
                     }
@@ -70,8 +62,8 @@ class MovieReviewActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
         with(viewModel) {
-            reviewMovie(id).observe(this@MovieReviewActivity) {
-                reviewAdapter.submitData(lifecycle, it)
+            reviewMovie(id).observe(this@MovieReviewActivity) { data ->
+                reviewAdapter.submitData(lifecycle, data)
             }
         }
     }

@@ -49,14 +49,14 @@ class MovieAdapter(
                 oldItem: Movie,
                 newItem: Movie
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
                 oldItem: Movie,
                 newItem: Movie
             ): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem == newItem
             }
         }
     }
