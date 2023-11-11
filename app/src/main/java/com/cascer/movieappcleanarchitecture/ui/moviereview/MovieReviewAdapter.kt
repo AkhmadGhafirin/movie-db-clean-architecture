@@ -1,6 +1,5 @@
 package com.cascer.movieappcleanarchitecture.ui.moviereview
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -14,11 +13,10 @@ import com.cascer.movieappcleanarchitecture.utils.ImageUtils.loadCircle
 import com.cascer.movieappcleanarchitecture.utils.gone
 import com.cascer.movieappcleanarchitecture.utils.toDisplayDate
 import com.cascer.movieappcleanarchitecture.utils.visible
-import com.google.gson.Gson
 
 class MovieReviewAdapter(
     private val listener: (review: MovieReview) -> Unit
-) : PagingDataAdapter<MovieReview, MovieReviewAdapter.MovieReviewViewHolder>(DIFF_ITEM_CALLBACK) {
+) : PagingDataAdapter<MovieReview, MovieReviewAdapter.MovieReviewViewHolder>(DIFF_REVIEW_ITEM_CALLBACK) {
 
     private var isOpen = false
 
@@ -45,7 +43,6 @@ class MovieReviewAdapter(
         }
 
         fun bind(item: MovieReview) {
-            Log.d("CheckValue", "data: ${Gson().toJson(item)}")
             with(binding) {
                 ivAvatar.loadCircle(binding.root.context, item.authorDetails.avatarPath)
                 tvReviewer.text = item.author
@@ -77,7 +74,7 @@ class MovieReviewAdapter(
     }
 
     companion object {
-        val DIFF_ITEM_CALLBACK = object : DiffUtil.ItemCallback<MovieReview>() {
+        val DIFF_REVIEW_ITEM_CALLBACK = object : DiffUtil.ItemCallback<MovieReview>() {
             override fun areItemsTheSame(oldItem: MovieReview, newItem: MovieReview): Boolean {
                 return oldItem.id == newItem.id
             }

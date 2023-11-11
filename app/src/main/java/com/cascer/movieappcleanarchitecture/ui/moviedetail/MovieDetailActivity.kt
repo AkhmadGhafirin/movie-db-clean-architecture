@@ -125,20 +125,20 @@ class MovieDetailActivity : AppCompatActivity() {
                 if (it != null) {
                     when (it) {
                         is Resource.Success -> {
+                            handleError(false)
                             handleLoadingState(false)
                             it.data?.let { movie -> setupDataView(movie) }
                         }
 
                         is Resource.Loading -> {
+                            handleError(false)
                             handleLoadingState(true)
                         }
 
                         is Resource.Error -> {
                             handleLoadingState(false)
-                            Toast.makeText(this@MovieDetailActivity, it.message, Toast.LENGTH_SHORT)
-                                .show()
+                            handleError(true)
                         }
-
                     }
                 }
             }
@@ -146,18 +146,19 @@ class MovieDetailActivity : AppCompatActivity() {
                 if (it != null) {
                     when (it) {
                         is Resource.Success -> {
+                            handleError(false)
                             handleLoadingState(false)
                             it.data?.let { movies -> castAdapter.submitData(movies) }
                         }
 
                         is Resource.Loading -> {
                             handleLoadingState(true)
+                            handleError(false)
                         }
 
                         is Resource.Error -> {
                             handleLoadingState(false)
-                            Toast.makeText(this@MovieDetailActivity, it.message, Toast.LENGTH_SHORT)
-                                .show()
+                            handleError(true)
                         }
                     }
                 }
@@ -166,16 +167,18 @@ class MovieDetailActivity : AppCompatActivity() {
                 if (it != null) {
                     when (it) {
                         is Resource.Success -> {
+                            handleError(false)
                             val videos =
                                 it.data?.filter { video -> video.official && video.site == "YouTube" && video.type == "Trailer" }
                             videos?.first()?.let { video -> setupVideo(video.key) }
                         }
 
-                        is Resource.Loading -> {}
+                        is Resource.Loading -> {
+                            handleError(false)
+                        }
 
                         is Resource.Error -> {
-                            Toast.makeText(this@MovieDetailActivity, it.message, Toast.LENGTH_SHORT)
-                                .show()
+                            handleError(true)
                         }
                     }
                 }
@@ -186,6 +189,21 @@ class MovieDetailActivity : AppCompatActivity() {
                     firstLoad = false
                     setStatusFavorite()
                 }
+            }
+        }
+    }
+
+    private fun handleError(isError: Boolean) {
+        with(binding) {
+            if (isError) {
+                containerError.viewError.visible()
+                fabFavorite.gone()
+                containerError.btnRetry.setOnClickListener {
+                    setupViewModel()
+                }
+            }else {
+                containerError.viewError.gone()
+                fabFavorite.visible()
             }
         }
     }

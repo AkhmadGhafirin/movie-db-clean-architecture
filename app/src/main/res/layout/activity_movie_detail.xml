@@ -27,7 +27,6 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/row_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white">
@@ -384,4 +383,14 @@
 
         <include layout="@layout/activity_movie_detail_placeholder" />
     </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    <include
+        android:id="@+id/container_error"
+        layout="@layout/view_error"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

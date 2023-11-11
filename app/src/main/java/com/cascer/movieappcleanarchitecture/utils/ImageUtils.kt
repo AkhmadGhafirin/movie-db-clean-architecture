@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Color
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.cascer.movieappcleanarchitecture.R
 import com.cascer.movieappcleanarchitecture.utils.Constant.IMAGE_W500_URL
 import java.util.Random

@@ -1,6 +1,5 @@
 package com.cascer.movieappcleanarchitecture.ui.movielist
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -12,7 +11,7 @@ import com.cascer.movieappcleanarchitecture.utils.ImageUtils.load
 
 class MovieAdapter(
     private val listener: (movie: Movie) -> Unit
-) : PagingDataAdapter<Movie, MovieAdapter.MovieViewHolder>(DIFF_ITEM_CALLBACK) {
+) : PagingDataAdapter<Movie, MovieAdapter.MovieViewHolder>(DIFF_MOVIE_ITEM_CALLBACK) {
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
@@ -44,7 +43,7 @@ class MovieAdapter(
     }
 
     companion object {
-        val DIFF_ITEM_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
+        val DIFF_MOVIE_ITEM_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
             override fun areItemsTheSame(
                 oldItem: Movie,
                 newItem: Movie

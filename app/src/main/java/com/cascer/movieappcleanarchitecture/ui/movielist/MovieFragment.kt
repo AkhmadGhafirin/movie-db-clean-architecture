@@ -62,17 +62,31 @@ class MovieFragment(private val type: Int) : Fragment() {
             }
 
             movieAdapter.addLoadStateListener { loadState ->
-                if (loadState.source.refresh is LoadState.Loading) {
-                    if (!progressBar.isShimmerStarted) progressBar.startShimmer()
-                    progressBar.visible()
+                val errorState = when {
+                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                    else -> null
+                }
+                if (errorState != null) {
+                    containerError.viewError.visible()
+                    containerError.btnRetry.setOnClickListener {
+                        movieAdapter.refresh()
+                    }
                 } else {
-                    progressBar.gone()
-                    if (movieAdapter.itemCount == 0) {
-                        containerEmpty.viewEmpty.visible()
-                        rvList.gone()
+                    containerError.viewError.gone()
+                    if (loadState.source.refresh is LoadState.Loading) {
+                        if (!progressBar.isShimmerStarted) progressBar.startShimmer()
+                        progressBar.visible()
                     } else {
-                        containerEmpty.viewEmpty.gone()
-                        rvList.visible()
+                        progressBar.gone()
+                        if (movieAdapter.itemCount == 0) {
+                            containerEmpty.viewEmpty.visible()
+                            rvList.gone()
+                        } else {
+                            containerEmpty.viewEmpty.gone()
+                            rvList.visible()
+                        }
                     }
                 }
             }
