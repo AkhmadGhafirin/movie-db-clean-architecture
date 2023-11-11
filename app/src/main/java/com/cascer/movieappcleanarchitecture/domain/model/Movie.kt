@@ -24,6 +24,5 @@ data class Movie(
     val voteCount: Int,
     val productionCompanies: List<ProductionCompany>,
     val productionCountries: List<ProductionCountry>,
-    val spokenLanguages: List<SpokenLanguage>,
-    val casts: List<MovieCast> = emptyList(),
+    val spokenLanguages: List<SpokenLanguage>
 )

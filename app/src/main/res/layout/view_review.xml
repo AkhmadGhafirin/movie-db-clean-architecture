@@ -61,7 +61,7 @@
                 tools:text="10" />
 
             <ImageView
-                android:id="@+id/iv_open"
+                android:id="@+id/iv_collapsing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/baseline_keyboard_arrow_down_24"

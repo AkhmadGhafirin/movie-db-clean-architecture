@@ -1,5 +1,6 @@
 package com.cascer.movieappcleanarchitecture.ui.moviereview
 
+import android.animation.LayoutTransition
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -51,7 +52,7 @@ class MovieReviewAdapter(
                 rowContainer.setOnClickListener {
                     isOpen = !isOpen
                     if (isOpen) {
-                        ivOpen.setImageDrawable(
+                        ivCollapsing.setImageDrawable(
                             ContextCompat.getDrawable(
                                 binding.root.context,
                                 R.drawable.baseline_keyboard_arrow_down_24
@@ -59,7 +60,7 @@ class MovieReviewAdapter(
                         )
                         tvContent.gone()
                     } else {
-                        ivOpen.setImageDrawable(
+                        ivCollapsing.setImageDrawable(
                             ContextCompat.getDrawable(
                                 binding.root.context,
                                 R.drawable.baseline_keyboard_arrow_up_24
