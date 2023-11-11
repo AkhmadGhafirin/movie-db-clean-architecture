@@ -17,7 +17,7 @@ fun View.invisible() {
 }
 
 fun String.toDisplayDate(
-    apiFormat: String = "yyyy-MM-ddTHH:mm:ss:SSSZ",
+    apiFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
     displayFormat: String = "MM/dd/yyyy - HH:mm"
 ): String {
     return try {
@@ -26,6 +26,7 @@ fun String.toDisplayDate(
         val parseDate = apiFormat.parse(this)
         displayFormat.format(parseDate)
     } catch (e: Exception) {
+        e.printStackTrace()
         this
     }
 }
